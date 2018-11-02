@@ -14,18 +14,13 @@ Hayai-Annotation-Plants provides five levels of annotation:
 4) protein existence level; 
 5) and evidence code for GO annotation.
 
-Author
--------
-Andrea Ghelfi 
-(Kazusa DNA Research Institute, Japan)
 
 Documentation
 ------------
-For more information on downloading, installing and running Hayai-Annotation Plants please see [Hayai-Annotation-Plants wiki](https://github.com/kdri-genomics/Hayai-Annotation-Plants/wiki) 
+For more information on downloading, installing and running **Hayai-Annotation Plants** please see [Hayai-Annotation-Plants wiki](https://github.com/kdri-genomics/Hayai-Annotation-Plants/wiki) 
 
-Third-party
-------------
-Hayai-Annotation Plants includes a third-party software
+Author
+-------
+Andrea Ghelfi 
+([Kazusa DNA Research Institute](https://www.kazusa.or.jp/laboratories/advanced-department/plant-genome-lab/))
 
-USEARCH
-R-base (shiny, DT)
