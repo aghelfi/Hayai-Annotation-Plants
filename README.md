@@ -17,7 +17,7 @@ Hayai-Annotation-Plants provides five levels of annotation:
 
 Documentation
 ------------
-For more information on downloading, installing and running **Hayai-Annotation Plants** please see [Hayai-Annotation-Plants wiki](https://github.com/kdri-genomics/Hayai-Annotation-Plants/wiki) 
+For downloading, installing and running **Hayai-Annotation Plants** please see [Hayai-Annotation-Plants wiki](https://github.com/kdri-genomics/Hayai-Annotation-Plants/wiki) 
 
 Author
 -------
