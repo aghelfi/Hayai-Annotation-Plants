@@ -14,6 +14,6 @@ Hayai-Annotation provides five levels of annotation:
 4) protein existence level; 
 5) and evidence code for GO annotation.
 
-Authors
+Author
 -------
 Andrea Ghelfi
