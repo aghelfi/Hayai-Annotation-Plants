@@ -16,4 +16,15 @@ Hayai-Annotation provides five levels of annotation:
 
 Author
 -------
-Andrea Ghelfi
+Andrea Ghelfi 
+Kazusa DNA Research Institute
+
+Publication
+------------
+BioRxiv
+
+Third-party
+------------
+Hayai-Annotation Plants includes a third-party software
+
+USEARCH
