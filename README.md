@@ -21,10 +21,11 @@ Andrea Ghelfi
 
 Publication
 ------------
-BioRxiv
+
 
 Third-party
 ------------
 Hayai-Annotation Plants includes a third-party software
 
 USEARCH
+R-base (shiny, DT)
