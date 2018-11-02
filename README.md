@@ -17,7 +17,7 @@ Hayai-Annotation provides five levels of annotation:
 Author
 -------
 Andrea Ghelfi 
-Kazusa DNA Research Institute
+(Kazusa DNA Research Institute, Japan)
 
 Publication
 ------------
