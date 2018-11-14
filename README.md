@@ -22,5 +22,5 @@ For downloading, installing and running **Hayai-Annotation Plants** please see [
 Author
 -------
 Andrea Ghelfi 
-([Kazusa DNA Research Institute](https://www.kazusa.or.jp/laboratories/advanced-department/plant-genome-lab/))
+(Kazusa DNA Research Institute)
 
