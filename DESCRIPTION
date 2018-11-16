@@ -1,0 +1,12 @@
+Package: hayai
+Type: Package
+Title: Hayai-Annotation Plants: An ultra-fast and comprehensive gene annotation system in plants
+Version: 1.0
+Date: 2018-11-16
+Author: Andrea Ghelfi
+#Maintainer: Andrea Ghelfi <andreaghelfi at kazusa.or.jp>
+Depends: R (>= 3.1.0), shiny, DT
+#Description: Hayai-Annotation Plants is an R-package with a shiny-based interface for an ultra-fast and accurate gene annotation system for plant species using R. The pipeline combines the sequence-similarity searches, using USEARCH against UniProtKB (taxonomy Embryophyta), with a functional annotation step. Hayai-Annotation Plants provides five layers of annotation: 1) gene name; 2) gene ontology terms consisting of its three main domains (Biological Process, Molecular Function, and Cellular Component); 3) enzyme commission number; 4) protein existence level; 5) and evidence type.
+#License: GPL-3
+#BugReports: https://github.com/kdri-genomics/Hayai-Annotation-Plants/issues
+
