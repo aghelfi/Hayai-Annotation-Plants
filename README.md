@@ -21,8 +21,8 @@ For downloading, installing and running **Hayai-Annotation Plants** please see [
 
 Reference
 ---------
-Hayai-Annotation Plants: an ultra-fast and comprehensive gene annotation system in plants 
-Andrea Ghelfi, Kenta Shirasawa, Hideki Hirakawa, Sachiko Isobe
+Hayai-Annotation Plants: an ultra-fast and comprehensive gene annotation system in plants <br/>
+Andrea Ghelfi, Kenta Shirasawa, Hideki Hirakawa, Sachiko Isobe <br/>
 doi:[https://doi.org/10.1101/473488](https://www.biorxiv.org/content/early/2018/11/20/473488) 
 
 
