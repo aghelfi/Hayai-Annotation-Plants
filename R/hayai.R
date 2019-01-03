@@ -23,12 +23,12 @@ loadData <- function() {
   system ('rm df.csv')
 
   if (align == "local"){
-    temp_usearch1 <- './usearch -usearch_useralignment TMPquery.fasta -db PHYTA -id userseqID -maxaccepts usermaxaccepts -blast6out TMPRESULTSUSEARCH -evalue 1e-USERSEVALUE -query_cov USERSQUERYCOV'
+    temp_usearch1 <- 'usearch -usearch_useralignment TMPquery.fasta -db PHYTA -id userseqID -maxaccepts usermaxaccepts -blast6out TMPRESULTSUSEARCH -evalue 1e-USERSEVALUE -query_cov USERSQUERYCOV'
     usearch_run1 <- gsub ("useralignment", "local", temp_usearch1)
   }
 
   if (align == "global"){
-    temp_usearch1 <- './usearch -usearch_useralignment TMPquery.fasta -db PHYTA -id userseqID -maxaccepts usermaxaccepts -blast6out TMPRESULTSUSEARCH -evalue 1e-USERSEVALUE -query_cov USERSQUERYCOV'
+    temp_usearch1 <- 'usearch -usearch_useralignment TMPquery.fasta -db PHYTA -id userseqID -maxaccepts usermaxaccepts -blast6out TMPRESULTSUSEARCH -evalue 1e-USERSEVALUE -query_cov USERSQUERYCOV'
     usearch_run1 <- gsub ("useralignment", "global", temp_usearch1)
   }
 
@@ -122,6 +122,12 @@ loadData <- function() {
   # EC
   temp_ec <- temp_ec[!duplicated(temp_ec[, c("query")]), c("uniprot","query","EC")] 
   write.table(temp_ec, "EC_table.csv", row.names=F, col.names=T, sep=",")
+
+ length_temp <- length (temp[,1])
+
+ if (length_temp > 500) { # if number of annotated genes are higher than 500, do graphics
+
+
   # Graphics GO_BP
   sum_bp <- sort(table(bp$GO_BP_name), decreasing=T)
   sum_bp <- as.data.frame(sum_bp)
@@ -189,7 +195,11 @@ loadData <- function() {
   colnames(sum_ec) <- (c("EC","Counts"))
   write.table(sum_ec, "EC_counts.csv", row.names=F, col.names=T, sep=",")
   write.table(sum_ec[,1], "unique_EC.csv", row.names=F, col.names=F, quote=F) # use on KEGG Mapper
+
+ } # end of graphics
+
   anota
+
  }
 }
 
