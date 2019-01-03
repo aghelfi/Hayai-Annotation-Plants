@@ -1,20 +1,16 @@
 \name{hayai}
 \alias{hayai}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Hayai-Annotation Plants}
-\description{ayai-Annotation Plants is an R-package with a shiny-based interface for an ultra-fast and accurate gene annotation s
-ystem for plant species using R. The pipeline combines the sequence-similarity searches, using USEARCH against UniProtKB (taxonomy
- Embryophyta), with a functional annotation step. Hayai-Annotation Plants provides five layers of annotation: 1) gene name; 2) gen
-e ontology terms consisting of its three main domains (Biological Process, Molecular Function, and Cellular Component); 3) enzyme 
-commission number; 4) protein existence level; 5) and evidence type.}
+\title{ Hayai-Annotation Plants }
+\description{ Hayai-Annotation Plants is an R-package with a shiny-based interface for an ultra-fast and accurate gene annotation system for plant species using R. The pipeline combines the sequence-similarity searches, using USEARCH against UniProtKB (taxonomy  Embryophyta), with a functional annotation step. Hayai-Annotation Plants provides five layers of annotation: 1) gene name; 2) gene ontology terms consisting of its three main domains (Biological Process, Molecular Function, and Cellular Component); 3) enzyme commission number; 4) protein existence level; 5) and evidence type.}
 \usage{
 hayai()
 }
 %- maybe also 'usage' for other objects documented here.
-\details{After install.package ("hayai_1.0.tar.gz"), install database.
+\details{ After install.package ("hayai_1.0.1.tar.gz"), install database.
 To install database, type:
 db ()
-This command will download Embryophyta/UniProt database from ftp.kazusa.or.jp into hayai/data directory permanentely.
+This command will download Embryophyta/UniProt database from ftp.kazusa.or.jp into hayai/data directory permanentely
 }
 \value{
 %%  ~Describe the value returned
@@ -23,8 +19,11 @@ This command will download Embryophyta/UniProt database from ftp.kazusa.or.jp in
 %%  \item{comp2 }{Description of 'comp2'}
 %% ...
 }
-\references{https://github.com/kdri-genomics/Hayai-Annotation-Plants/}
-\author{Andrea Ghelfi
+\references{
+https://github.com/kdri-genomics/Hayai-Annotation-Plants/
+}
+\author{
+Andrea Ghelfi
 }
 \note{
 %%  ~~further notes~~
@@ -59,12 +58,12 @@ function ()
             system(query_title)
             system("rm df.csv")
             if (align == "local") {
-                temp_usearch1 <- "./usearch -usearch_useralignment TMPquery.fasta -db PHYTA -id userseqID -maxaccepts usermaxaccepts -blast6out TMPRESULTSUSEARCH -evalue 1e-USERSEVALUE -query_cov USERSQUERYCOV"
+                temp_usearch1 <- "usearch -usearch_useralignment TMPquery.fasta -db PHYTA -id userseqID -maxaccepts usermaxaccepts -blast6out TMPRESULTSUSEARCH -evalue 1e-USERSEVALUE -query_cov USERSQUERYCOV"
                 usearch_run1 <- gsub("useralignment", "local", 
                   temp_usearch1)
             }
             if (align == "global") {
-                temp_usearch1 <- "./usearch -usearch_useralignment TMPquery.fasta -db PHYTA -id userseqID -maxaccepts usermaxaccepts -blast6out TMPRESULTSUSEARCH -evalue 1e-USERSEVALUE -query_cov USERSQUERYCOV"
+                temp_usearch1 <- "usearch -usearch_useralignment TMPquery.fasta -db PHYTA -id userseqID -maxaccepts usermaxaccepts -blast6out TMPRESULTSUSEARCH -evalue 1e-USERSEVALUE -query_cov USERSQUERYCOV"
                 usearch_run1 <- gsub("useralignment", "global", 
                   temp_usearch1)
             }
@@ -177,85 +176,99 @@ function ()
                 c("uniprot", "query", "EC")]
             write.table(temp_ec, "EC_table.csv", row.names = F, 
                 col.names = T, sep = ",")
-            sum_bp <- sort(table(bp$GO_BP_name), decreasing = T)
-            sum_bp <- as.data.frame(sum_bp)
-            sum_bp <- sum_bp[sum_bp$Freq > 0, ]
-            colnames(sum_bp) <- c("GO_BP_name", "Counts")
-            sum_bp$GO_BP_name <- strtrim(sum_bp$GO_BP_name, 55)
-            bar_bp <- sum_bp[50:1, ]
-            y <- bar_bp[50, 2]
-            z <- 1.25 * y
-            pdf("GO_BP.pdf", width = 11, height = 11)
-            par(mar = c(2, 2, 6, 2), oma = c(0.5, 16, 5, 0.5))
-            barplot(bar_bp$Counts, names = bar_bp$GO_BP_name, 
-                las = 1, horiz = T, cex.names = 0.75, space = 2, 
-                xlim = c(0, z), axes = F)
-            axis(3)
-            mtext("Number of Genes", side = 3, line = 2, font = 1)
-            title(main = "GO Biological Process - Top 50 - Gene Level", 
-                font.main = 4, line = 4)
-            dev.off()
-            write.table(sum_bp, "GO_BP_counts.csv", row.names = F, 
-                col.names = T, sep = ",")
-            sum_mf <- sort(table(mf$GO_MF_name), decreasing = T)
-            sum_mf <- as.data.frame(sum_mf)
-            sum_mf <- sum_mf[sum_mf$Freq > 0, ]
-            colnames(sum_mf) <- c("GO_MF_name", "Counts")
-            sum_mf$GO_MF_name <- strtrim(sum_mf$GO_MF_name, 55)
-            bar_mf <- sum_mf[50:1, ]
-            y <- bar_mf[50, 2]
-            z <- 1.25 * y
-            pdf("GO_MF.pdf", width = 11, height = 11)
-            par(mar = c(2, 2, 6, 2), oma = c(0.5, 16, 5, 0.5))
-            barplot(bar_mf$Counts, names = bar_mf$GO_MF_name, 
-                las = 1, horiz = T, cex.names = 0.75, space = 2, 
-                xlim = c(0, z), axes = F)
-            axis(3)
-            mtext("Number of Genes", side = 3, line = 2, font = 1)
-            title(main = "GO Molecular Function - Top 50 - Gene Level", 
-                font.main = 4, line = 4)
-            dev.off()
-            write.table(sum_mf, "GO_MF_counts.csv", row.names = F, 
-                col.names = T, sep = ",")
-            sum_cc <- sort(table(cc$GO_CC_name), decreasing = T)
-            sum_cc <- as.data.frame(sum_cc)
-            sum_cc <- sum_cc[sum_cc$Freq > 0, ]
-            colnames(sum_cc) <- c("GO_CC_name", "Counts")
-            sum_cc$GO_CC_name <- strtrim(sum_cc$GO_CC_name, 55)
-            bar_cc <- sum_cc[50:1, ]
-            y <- bar_cc[50, 2]
-            z <- 1.25 * y
-            pdf("GO_CC.pdf", width = 11, height = 11)
-            par(mar = c(2, 2, 6, 2), oma = c(0.5, 16, 5, 0.5))
-            barplot(bar_cc$Counts, names = bar_cc$GO_CC_name, 
-                las = 1, horiz = T, cex.names = 0.75, space = 2, 
-                xlim = c(0, z), axes = F)
-            axis(3)
-            mtext("Number of Genes", side = 3, line = 2, font = 1)
-            title(main = "GO Cellular Component - Top 50 - Gene Level", 
-                font.main = 4, line = 4)
-            dev.off()
-            write.table(sum_cc, "GO_CC_counts.csv", row.names = F, 
-                col.names = T, sep = ",")
-            sum_ec <- sort(table(droplevels(temp_ec$EC)), decreasing = T)
-            bar_ec <- sum_ec[50:1]
-            y <- bar_ec[[50]]
-            z <- 1.25 * y
-            pdf("EC_codes.pdf", width = 11, height = 11)
-            par(mar = c(2, 2, 6, 2), oma = c(0.5, 5, 5, 1))
-            barplot(bar_ec, las = 1, horiz = T, cex.names = 0.75, 
-                space = 2, xlim = c(0, z), axes = F)
-            axis(3)
-            mtext("Number of Genes", side = 3, line = 2, font = 1)
-            title(main = "Enzyme Commission - Top 50", font = 2, 
-                line = 4)
-            dev.off()
-            sum_ec <- as.data.frame(sum_ec)
-            colnames(sum_ec) <- (c("EC", "Counts"))
-            write.table(sum_ec, "EC_counts.csv", row.names = F, 
-                col.names = T, sep = ",")
-            write.table(sum_ec[, 1], "unique_EC.csv", row.names = F, 
-                col.names = F, quote = F)
+            length_temp <- length(temp[, 1])
+            if (length_temp > 500) {
+                sum_bp <- sort(table(bp$GO_BP_name), decreasing = T)
+                sum_bp <- as.data.frame(sum_bp)
+                sum_bp <- sum_bp[sum_bp$Freq > 0, ]
+                colnames(sum_bp) <- c("GO_BP_name", "Counts")
+                sum_bp$GO_BP_name <- strtrim(sum_bp$GO_BP_name, 
+                  55)
+                bar_bp <- sum_bp[50:1, ]
+                y <- bar_bp[50, 2]
+                z <- 1.25 * y
+                pdf("GO_BP.pdf", width = 11, height = 11)
+                par(mar = c(2, 2, 6, 2), oma = c(0.5, 16, 5, 
+                  0.5))
+                barplot(bar_bp$Counts, names = bar_bp$GO_BP_name, 
+                  las = 1, horiz = T, cex.names = 0.75, space = 2, 
+                  xlim = c(0, z), axes = F)
+                axis(3)
+                mtext("Number of Genes", side = 3, line = 2, 
+                  font = 1)
+                title(main = "GO Biological Process - Top 50 - Gene Level", 
+                  font.main = 4, line = 4)
+                dev.off()
+                write.table(sum_bp, "GO_BP_counts.csv", row.names = F, 
+                  col.names = T, sep = ",")
+                sum_mf <- sort(table(mf$GO_MF_name), decreasing = T)
+                sum_mf <- as.data.frame(sum_mf)
+                sum_mf <- sum_mf[sum_mf$Freq > 0, ]
+                colnames(sum_mf) <- c("GO_MF_name", "Counts")
+                sum_mf$GO_MF_name <- strtrim(sum_mf$GO_MF_name, 
+                  55)
+                bar_mf <- sum_mf[50:1, ]
+                y <- bar_mf[50, 2]
+                z <- 1.25 * y
+                pdf("GO_MF.pdf", width = 11, height = 11)
+                par(mar = c(2, 2, 6, 2), oma = c(0.5, 16, 5, 
+                  0.5))
+                barplot(bar_mf$Counts, names = bar_mf$GO_MF_name, 
+                  las = 1, horiz = T, cex.names = 0.75, space = 2, 
+                  xlim = c(0, z), axes = F)
+                axis(3)
+                mtext("Number of Genes", side = 3, line = 2, 
+                  font = 1)
+                title(main = "GO Molecular Function - Top 50 - Gene Level", 
+                  font.main = 4, line = 4)
+                dev.off()
+                write.table(sum_mf, "GO_MF_counts.csv", row.names = F, 
+                  col.names = T, sep = ",")
+                sum_cc <- sort(table(cc$GO_CC_name), decreasing = T)
+                sum_cc <- as.data.frame(sum_cc)
+                sum_cc <- sum_cc[sum_cc$Freq > 0, ]
+                colnames(sum_cc) <- c("GO_CC_name", "Counts")
+                sum_cc$GO_CC_name <- strtrim(sum_cc$GO_CC_name, 
+                  55)
+                bar_cc <- sum_cc[50:1, ]
+                y <- bar_cc[50, 2]
+                z <- 1.25 * y
+                pdf("GO_CC.pdf", width = 11, height = 11)
+                par(mar = c(2, 2, 6, 2), oma = c(0.5, 16, 5, 
+                  0.5))
+                barplot(bar_cc$Counts, names = bar_cc$GO_CC_name, 
+                  las = 1, horiz = T, cex.names = 0.75, space = 2, 
+                  xlim = c(0, z), axes = F)
+                axis(3)
+                mtext("Number of Genes", side = 3, line = 2, 
+                  font = 1)
+                title(main = "GO Cellular Component - Top 50 - Gene Level", 
+                  font.main = 4, line = 4)
+                dev.off()
+                write.table(sum_cc, "GO_CC_counts.csv", row.names = F, 
+                  col.names = T, sep = ",")
+                sum_ec <- sort(table(droplevels(temp_ec$EC)), 
+                  decreasing = T)
+                bar_ec <- sum_ec[50:1]
+                y <- bar_ec[[50]]
+                z <- 1.25 * y
+                pdf("EC_codes.pdf", width = 11, height = 11)
+                par(mar = c(2, 2, 6, 2), oma = c(0.5, 5, 5, 1))
+                barplot(bar_ec, las = 1, horiz = T, cex.names = 0.75, 
+                  space = 2, xlim = c(0, z), axes = F)
+                axis(3)
+                mtext("Number of Genes", side = 3, line = 2, 
+                  font = 1)
+                title(main = "Enzyme Commission - Top 50", font = 2, 
+                  line = 4)
+                dev.off()
+                sum_ec <- as.data.frame(sum_ec)
+                colnames(sum_ec) <- (c("EC", "Counts"))
+                write.table(sum_ec, "EC_counts.csv", row.names = F, 
+                  col.names = T, sep = ",")
+                write.table(sum_ec[, 1], "unique_EC.csv", row.names = F, 
+                  col.names = F, quote = F)
+            }
             anota
         }
     }
