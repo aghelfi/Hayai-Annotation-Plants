@@ -25,4 +25,7 @@ Hayai-Annotation Plants: an ultra-fast and comprehensive gene annotation system 
 Andrea Ghelfi, Kenta Shirasawa, Hideki Hirakawa, Sachiko Isobe <br/>
 doi:[https://doi.org/10.1101/473488](https://www.biorxiv.org/content/early/2018/11/20/473488) 
 
-
+Updates
+-------
+2019/01/04. Low number of input sequences crash - Fixed. Now, graphics are generated if number of annotated input queries are higher than 500.<br/>
+2019/01/04. Hayai-Annotation Plants run with even if usearch is installed in another directory (requires symbolic link).
