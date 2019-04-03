@@ -27,6 +27,6 @@ doi:[https://doi.org/10.1101/473488](https://www.biorxiv.org/content/early/2018/
 
 Updates
 -------
-2019/04/03. [Hayai-Annotation Plants Docker Container](https://hub.docker.com/r/kazusa005/hayai-annotation-plants) 
-2019/01/04. Low number of input sequences crash - Fixed. Now, graphics are generated if number of annotated input queries are higher than 500.<br/>
+2019/04/03. [Hayai-Annotation Plants Docker Container](https://hub.docker.com/r/kazusa005/hayai-annotation-plants) <br/>
+2019/01/04. Low number of input sequences crash - Fixed. Now, graphics are generated if number of annotated queries are higher than 500.<br/>
 2019/01/04. Hayai-Annotation Plants run with even if USEARCH is installed in another directory (requires symbolic link).
