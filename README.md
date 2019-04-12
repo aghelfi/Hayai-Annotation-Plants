@@ -11,8 +11,8 @@ Hayai-Annotation-Plants provides five levels of annotation:
 1) Gene Name; 
 2) Gene Ontology (GO) consisting of three main domains (Biological Process, Molecular Function and Cellular Component); 
 3) Enzyme Commission Code (EC); 
-4) Protein Existence Level; 
-5) Evidence Code for GO annotation.
+4) [Protein Existence Level](https://www.uniprot.org/help/protein_existence); 
+5) [Evidence Code for GO annotation](http://geneontology.org/docs/guide-go-evidence-codes/).
 
 
 Documentation
