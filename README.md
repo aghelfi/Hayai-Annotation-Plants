@@ -8,7 +8,7 @@ Hayai-Annotation-Plants is an R-package with a shiny-browser interface for a hig
 
 Hayai-Annotation-Plants provides five levels of annotation: 
 
-1) Gene Name; 
+1) Protein Name; 
 2) Gene Ontology (GO) consisting of three main domains (Biological Process, Molecular Function and Cellular Component); 
 3) [Enzyme Commission Code - EC](https://enzyme.expasy.org/); 
 4) [Protein Existence Level](https://www.uniprot.org/help/protein_existence); 
