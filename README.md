@@ -1,4 +1,4 @@
-# Hayai-Annotation Plants
+# Hayai-Annotation Plants v1.0.1
 
 R-package for an Ultra-Fast and Comprehensive Gene Annotation in Plants
 
