@@ -1,30 +1,27 @@
 \name{hayai}
 \alias{hayai}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ Hayai-Annotation Plants }
-\description{ Hayai-Annotation Plants is an R-package with a shiny-based interface for an ultra-fast and accurate gene annotation system for plant species using R. The pipeline combines the sequence-similarity searches, using USEARCH against UniProtKB (taxonomy  Embryophyta), with a functional annotation step. Hayai-Annotation Plants provides five layers of annotation: 1) gene name; 2) gene ontology terms consisting of its three main domains (Biological Process, Molecular Function, and Cellular Component); 3) enzyme commission number; 4) protein existence level; 5) and evidence type.}
+\title{Hayai-Annotation Plants v1.0.2}
+\description{Hayai-Annotation Plants is an R-package with a shiny-based interface for an ultra-fast and accurate gene annotation s
+ystem for plant species using R. The pipeline combines the sequence-similarity searches, using USEARCH against UniProtKB (taxonomy
+ Viridiplantae), with a functional annotation step. Hayai-Annotation Plants provides six layers of annotation: 1) Protein name; 2) Gene name; 3) Gen
+e Ontology ID and Terms, consisting of its three main domains (Biological Process, Molecular Function, and Cellular Component); 4) Enzyme 
+Commission number; 5) Protein Existence level; 6) and Evidence type for GO annotation.}
 \usage{
 hayai()
 }
-%- maybe also 'usage' for other objects documented here.
-\details{ After install.package ("hayai_1.0.1.tar.gz"), install database.
+\details{After install.package ("hayai_1.0.2.tar.gz"), install database.
 To install database, type:
 db ()
-This command will download Embryophyta/UniProt database from ftp.kazusa.or.jp into hayai/data directory permanentely
-}
+This command will download Viridiplantae/UniProt database from ftp.kazusa.or.jp into hayai/data directory permanentely.}
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+After call Hayai-Annotation Plants using the command hayai(), a browser will open in localhost.
 }
 \references{
-https://github.com/kdri-genomics/Hayai-Annotation-Plants/
+Hayai-Annotation Plants: an ultra-fast and comprehensive functional gene annotation system in plants <br/>
+Andrea Ghelfi, Kenta Shirasawa, Hideki Hirakawa, Sachiko Isobe,
+Bioinformatics, btz380, https://doi.org/10.1093/bioinformatics/btz380
 }
-\author{
-Andrea Ghelfi
-}
+\author{Andrea Ghelfi}
 \note{
 %%  ~~further notes~~
 }
@@ -35,9 +32,11 @@ Andrea Ghelfi
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+# install database; only firtst time you use Hayai-annotation Plants
+# db()
+# After install database, call Hayai-Annotation Plants
+hayai()
+
 
 ## The function is currently defined as
 function () 
@@ -58,12 +57,12 @@ function ()
             system(query_title)
             system("rm df.csv")
             if (align == "local") {
-                temp_usearch1 <- "usearch -usearch_useralignment TMPquery.fasta -db PHYTA -id userseqID -maxaccepts usermaxaccepts -blast6out TMPRESULTSUSEARCH -evalue 1e-USERSEVALUE -query_cov USERSQUERYCOV"
+                temp_usearch1 <- "usearch -usearch_useralignment TMPquery.fasta -db PHYTA -id userseqID -maxaccepts usermaxaccepts -blast6out TMPRESULTSUSEARCH -evalue 1e-USERSEVALUE -query_cov USERSQUERYCOV -threads 4"
                 usearch_run1 <- gsub("useralignment", "local", 
                   temp_usearch1)
             }
             if (align == "global") {
-                temp_usearch1 <- "usearch -usearch_useralignment TMPquery.fasta -db PHYTA -id userseqID -maxaccepts usermaxaccepts -blast6out TMPRESULTSUSEARCH -evalue 1e-USERSEVALUE -query_cov USERSQUERYCOV"
+                temp_usearch1 <- "usearch -usearch_useralignment TMPquery.fasta -db PHYTA -id userseqID -maxaccepts usermaxaccepts -blast6out TMPRESULTSUSEARCH -evalue 1e-USERSEVALUE -query_cov USERSQUERYCOV -threads 4"
                 usearch_run1 <- gsub("useralignment", "global", 
                   temp_usearch1)
             }
@@ -89,96 +88,137 @@ function ()
             linecat <- "cat TMPresults_usearch_a*.b6 > TMPoutput_usearch.txt"
             linecat <- gsub("TMP", tmp, linecat)
             system(linecat)
-            lineawk <- "awk '{print $2,$1,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12}' TMPoutput_usearch.txt | awk -F\"|\" '{print $3}' > TMPtable_usearch.txt"
+            lineawk <- "awk -F\"\t\" '{gsub(\"[#]\",\"\"); print $1\"|\"$2\"|\"$3\"|\"$4\"|\"$5\"|\"$6\"|\"$7\"|\"$8\"|\"$9\"|\"$10\"|\"$11\"|\"$12 }' TMPoutput_usearch.txt > TMPtable_usearch.txt"
             lineawk <- gsub("TMP", tmp, lineawk)
             system(lineawk)
             lineinput <- "TMPtable_usearch.txt"
             lineinput <- gsub("TMP", tmp, lineinput)
-            usearch <- read.table(lineinput)
-            colnames(usearch) <- c("uniprot", "query", "seqID", 
-                "length", "mis", "gaps", "startquery", "endquery", 
-                "starttarget", "endtarget", "evalue", "score")
-            temp <- merge(usearch, info_database, by = "uniprot", 
+            usearch <- read.table(lineinput, sep = "|")
+            colnames(usearch) <- c("Query_ID", "UNIPROT_AC", 
+                "UNIPROT_ID", "Protein_name", "Gene_name", "EC", 
+                "Protein_existence", "Sequence_identity", "Alignment_length", 
+                "Mismatches", "Gaps", "Start_query", "End_query", 
+                "Start_target", "End_target", "E_value", "Bitscore")
+            temp_ec <- usearch[!is.na(usearch$EC), c("Query_ID", 
+                "EC", "Protein_existence", "Sequence_identity", 
+                "Bitscore")]
+            temp <- usearch[, c("Query_ID", "UNIPROT_ID", "Protein_existence", 
+                "Sequence_identity", "Bitscore")]
+            temp_bp <- merge(usearch, bp_table, by = "UNIPROT_ID", 
                 all.x = T)
-            temp_bp <- merge(temp, bp_table, by = "uniprot", 
-                all.x = T)
-            temp_mf <- merge(temp, mf_table, by = "uniprot")
-            temp_cc <- merge(temp, cc_table, by = "uniprot")
-            temp_ec <- temp[!is.na(temp$EC), ]
+            temp_mf <- merge(temp, mf_table, by = "UNIPROT_ID")
+            temp_cc <- merge(temp, cc_table, by = "UNIPROT_ID")
             if (organism$Type_algorithm == "protein_existence") {
                 if (align == "local") {
-                  temp_bp <- temp_bp[order(temp_bp$Protein_Evidence, 
-                    temp_bp$evidence_type, -temp_bp$score), ]
-                  temp_mf <- temp_mf[order(temp_mf$Protein_Evidence, 
-                    temp_mf$evidence_type, -temp_mf$score), ]
-                  temp_cc <- temp_cc[order(temp_cc$Protein_Evidence, 
-                    temp_cc$evidence_type, -temp_cc$score), ]
-                  temp_ec <- temp_ec[order(temp_ec$Protein_Evidence, 
-                    temp_ec$evidence_type, -temp_ec$score), ]
+                  temp_bp <- temp_bp[order(temp_bp$Protein_existence, 
+                    temp_bp$Evidence, -temp_bp$Bitscore), ]
+                  temp_mf <- temp_mf[order(temp_mf$Protein_existence, 
+                    temp_mf$Evidence, -temp_mf$Bitscore), ]
+                  temp_cc <- temp_cc[order(temp_cc$Protein_existence, 
+                    temp_cc$Evidence, -temp_cc$Bitscore), ]
+                  temp_ec <- temp_ec[order(temp_ec$Protein_existence, 
+                    -temp_ec$Bitscore), ]
                 }
                 if (align == "global") {
-                  temp_bp <- temp_bp[order(temp_bp$Protein_Evidence, 
-                    temp_bp$evidence_type, -temp_bp$seqID), ]
-                  temp_mf <- temp_mf[order(temp_mf$Protein_Evidence, 
-                    temp_mf$evidence_type, -temp_mf$seqID), ]
-                  temp_cc <- temp_cc[order(temp_cc$Protein_Evidence, 
-                    temp_cc$evidence_type, -temp_cc$seqID), ]
-                  temp_ec <- temp_ec[order(temp_ec$Protein_Evidence, 
-                    temp_ec$evidence_type, -temp_ec$seqID), ]
+                  temp_bp <- temp_bp[order(temp_bp$Protein_existence, 
+                    temp_bp$Evidence, -temp_bp$Sequence_identity), 
+                    ]
+                  temp_mf <- temp_mf[order(temp_mf$Protein_existence, 
+                    temp_mf$Evidence, -temp_mf$Sequence_identity), 
+                    ]
+                  temp_cc <- temp_cc[order(temp_cc$Protein_existence, 
+                    temp_cc$Evidence, -temp_cc$Sequence_identity), 
+                    ]
+                  temp_ec <- temp_ec[order(temp_ec$Protein_existence, 
+                    -temp_ec$Sequence_identity), ]
                 }
             }
             if (organism$Type_algorithm == "score") {
-                temp_bp <- temp_bp[order(-temp_bp$seqID, temp_bp$Protein_Evidence, 
-                  temp_bp$evidence_type), ]
-                temp_mf <- temp_mf[order(-temp_mf$seqID, temp_mf$Protein_Evidence, 
-                  temp_mf$evidence_type), ]
-                temp_cc <- temp_cc[order(-temp_cc$seqID, temp_cc$Protein_Evidence, 
-                  temp_cc$evidence_type), ]
-                temp_ec <- temp_ec[order(-temp_ec$seqID, temp_ec$Protein_Evidence, 
-                  temp_ec$evidence_type), ]
+                if (align == "local") {
+                  temp_bp <- temp_bp[order(-temp_bp$Bitscore, 
+                    temp_bp$Protein_existence, temp_bp$Evidence), 
+                    ]
+                  temp_mf <- temp_mf[order(-temp_mf$Bitscore, 
+                    temp_mf$Protein_existence, temp_mf$Evidence), 
+                    ]
+                  temp_cc <- temp_cc[order(-temp_cc$Bitscore, 
+                    temp_cc$Protein_existence, temp_cc$Evidence), 
+                    ]
+                  temp_ec <- temp_ec[order(-temp_ec$Bitscore, 
+                    temp_ec$Protein_existence), ]
+                }
+                if (align == "global") {
+                  temp_bp <- temp_bp[order(-temp_bp$Sequence_identity, 
+                    temp_bp$Protein_existence, temp_bp$Evidence), 
+                    ]
+                  temp_mf <- temp_mf[order(-temp_bp$Sequence_identity, 
+                    temp_bp$Protein_existence, temp_bp$Evidence), 
+                    ]
+                  temp_cc <- temp_cc[order(-temp_bp$Sequence_identity, 
+                    temp_bp$Protein_existence, temp_bp$Evidence), 
+                    ]
+                  temp_ec <- temp_ec[order(-temp_ec$Sequence_identity, 
+                    temp_ec$Protein_existence), ]
+                }
             }
-            temp_bp <- temp_bp[!duplicated(temp_bp[, c("query")]), 
+            temp_bp <- temp_bp[!duplicated(temp_bp[, c("Query_ID")]), 
                 ]
-            temp_mf <- temp_mf[!duplicated(temp_mf[, c("query")]), 
+            temp_bp <- merge(temp_bp, goid2term, by = "GO_ID", 
+                all.x = T)
+            temp_bp <- temp_bp[, c(2:19, 1, 20)]
+            colnames(temp_bp)[19] <- "GO_BP_ID"
+            colnames(temp_bp)[20] <- "GO_BP_Term"
+            temp_mf <- temp_mf[!duplicated(temp_mf[, c("Query_ID")]), 
                 ]
-            temp_mf <- temp_mf[, c("query", "uniprot", "GO_MF", 
-                "GO_MF_name")]
-            temp_mf2 <- temp_mf[, c("query", "GO_MF", "GO_MF_name")]
-            temp_cc <- temp_cc[!duplicated(temp_cc[, c("query")]), 
+            temp_mf <- temp_mf[, c("Query_ID", "UNIPROT_ID", 
+                "GO_ID")]
+            temp_mf <- merge(temp_mf, goid2term, by = "GO_ID")
+            temp_mf2 <- temp_mf[, c("Query_ID", "GO_ID", "GO_Term")]
+            colnames(temp_mf2) <- c("Query_ID", "GO_MF_ID", "GO_MF_Term")
+            temp_cc <- temp_cc[!duplicated(temp_cc[, c("Query_ID")]), 
                 ]
-            temp_cc <- temp_cc[, c("query", "uniprot", "GO_CC", 
-                "GO_CC_name")]
-            temp_cc2 <- temp_cc[, c("query", "GO_CC", "GO_CC_name")]
-            anota <- merge(temp_bp, temp_mf2, by = "query", all.x = T, 
-                all.y = T)
-            anota <- merge(anota, temp_cc2, by = "query", all.x = T, 
-                all.y = T)
-            anota$evidence_type <- gsub("xIEA", "IEA", anota$evidence_type)
+            temp_cc <- temp_cc[, c("Query_ID", "UNIPROT_ID", 
+                "GO_ID")]
+            temp_cc <- merge(temp_cc, goid2term, by = "GO_ID")
+            temp_cc2 <- temp_cc[, c("Query_ID", "GO_ID", "GO_Term")]
+            colnames(temp_cc2) <- c("Query_ID", "GO_CC_ID", "GO_CC_Term")
+            anota <- merge(temp_bp, temp_mf2, by = "Query_ID", 
+                all.x = T)
+            anota <- merge(anota, temp_cc2, by = "Query_ID", 
+                all.x = T)
+            anota$Evidence <- gsub("xIEA", "IEA", anota$Evidence)
             write.table(anota, "hayai_annotation.csv", row.names = F, 
                 col.names = T, sep = ",")
-            temp_bp <- temp_bp[, c("query", "uniprot", "GO_BP")]
-            temp_bp <- temp_bp[!is.na(temp_bp$GO_BP), ]
-            temp_bp <- temp_bp[, c("query", "uniprot")]
-            bp <- merge(temp_bp, bp_table, by = "uniprot")
+            temp_bp <- temp_bp[, c("Query_ID", "UNIPROT_ID", 
+                "GO_BP_ID")]
+            temp_bp <- temp_bp[!is.na(temp_bp$GO_BP_ID), ]
+            temp_bp <- temp_bp[, c("Query_ID", "UNIPROT_ID")]
+            bp <- merge(temp_bp, bp_table, by = "UNIPROT_ID")
+            bp <- bp[, 1:3]
+            bp <- merge(bp, goid2term, by = "GO_ID", all.x = T)
             write.table(bp, "GO_BP_table.csv", row.names = F, 
                 col.names = T, sep = ",")
-            temp_mf <- temp_mf[!is.na(temp_mf$GO_MF), ]
-            temp_mf <- temp_mf[, c("query", "uniprot")]
-            mf <- merge(temp_mf, mf_table, by = "uniprot")
+            temp_mf <- temp_mf[!is.na(temp_mf$GO_ID), ]
+            temp_mf <- temp_mf[, c("Query_ID", "UNIPROT_ID")]
+            mf <- merge(temp_mf, mf_table, by = "UNIPROT_ID")
+            mf <- mf[, 1:3]
+            mf <- merge(mf, goid2term, by = "GO_ID", all.x = T)
             write.table(mf, "GO_MF_table.csv", row.names = F, 
                 col.names = T, sep = ",")
-            temp_cc <- temp_cc[!is.na(temp_cc$GO_CC), ]
-            temp_cc <- temp_cc[, c("query", "uniprot")]
-            cc <- merge(temp_cc, cc_table, by = "uniprot")
+            temp_cc <- temp_cc[!is.na(temp_cc$GO_ID), ]
+            temp_cc <- temp_cc[, c("Query_ID", "UNIPROT_ID")]
+            cc <- merge(temp_cc, cc_table, by = "UNIPROT_ID")
+            cc <- cc[, 1:3]
+            cc <- merge(cc, goid2term, by = "GO_ID", all.x = T)
             write.table(cc, "GO_CC_table.csv", row.names = F, 
                 col.names = T, sep = ",")
-            temp_ec <- temp_ec[!duplicated(temp_ec[, c("query")]), 
-                c("uniprot", "query", "EC")]
-            write.table(temp_ec, "EC_table.csv", row.names = F, 
+            temp_ec <- temp_ec[!duplicated(temp_ec[, c("Query_ID")]), 
+                c("Query_ID", "EC", "Protein_existence")]
+            write.table(temp_ec[, 1:3], "EC_table.csv", row.names = F, 
                 col.names = T, sep = ",")
-            length_temp <- length(temp[, 1])
-            if (length_temp > 500) {
-                sum_bp <- sort(table(bp$GO_BP_name), decreasing = T)
+            length_anota <- dim(anota)[1]
+            if (length_anota > 500) {
+                sum_bp <- sort(table(bp$GO_Term), decreasing = T)
                 sum_bp <- as.data.frame(sum_bp)
                 sum_bp <- sum_bp[sum_bp$Freq > 0, ]
                 colnames(sum_bp) <- c("GO_BP_name", "Counts")
@@ -201,7 +241,7 @@ function ()
                 dev.off()
                 write.table(sum_bp, "GO_BP_counts.csv", row.names = F, 
                   col.names = T, sep = ",")
-                sum_mf <- sort(table(mf$GO_MF_name), decreasing = T)
+                sum_mf <- sort(table(mf$GO_Term), decreasing = T)
                 sum_mf <- as.data.frame(sum_mf)
                 sum_mf <- sum_mf[sum_mf$Freq > 0, ]
                 colnames(sum_mf) <- c("GO_MF_name", "Counts")
@@ -224,7 +264,7 @@ function ()
                 dev.off()
                 write.table(sum_mf, "GO_MF_counts.csv", row.names = F, 
                   col.names = T, sep = ",")
-                sum_cc <- sort(table(cc$GO_CC_name), decreasing = T)
+                sum_cc <- sort(table(cc$GO_Term), decreasing = T)
                 sum_cc <- as.data.frame(sum_cc)
                 sum_cc <- sum_cc[sum_cc$Freq > 0, ]
                 colnames(sum_cc) <- c("GO_CC_name", "Counts")
@@ -302,9 +342,10 @@ function ()
         }
     }
     if (interactive()) {
-        ui <- fluidPage(h1(id = "big-heading", "Hayai-Annotation Plants"), 
+        ui <- fluidPage(shinyjs::useShinyjs(), h1(id = "big-heading", 
+            "Hayai-Annotation Plants v1.0.2 - Functional Protein Annotation for Plant Species"), 
             tags$style(HTML("#big-heading{color: DarkGreen;}")), 
-            br(), h5(id = "small-heading", "Kazusa DNA Research Institute"), 
+            br(), h5(id = "small-heading", "Kazusa DNA Research Institute - Kisarazu - Japan"), 
             tags$style(HTML("#small-heading{color: green;}")), 
             br(), br(), br(), fluidRow(column(3, radioButtons("Align", 
                 "Type of Alignment", choices = list(Local = "local", 
@@ -320,12 +361,17 @@ function ()
                     value = 80, min = 40, max = 100, step = 1), 
                   br(), numericInput("query_cov", "Minimum Query Coverage (\%)", 
                     value = 80, min = 20, max = 100, step = 1))), 
-            br(), br(), fileInput("userInput", "Upload FASTA File", 
+            br(), br(), fileInput("userInput", "Enter Query Sequence (FASTA format)", 
                 multiple = F, accept = c(".fasta", ".fa", ".faa", 
                   ".fna")), actionButton("submit", "Submit"), 
+            shinyjs::hidden(p(id = "text1", "Processing...")), 
             br(), br(), br(), downloadLink("downloadData", "Download"), 
             br(), br(), br(), fluidRow(DT::dataTableOutput("contents")))
         server <- function(input, output, session) {
+            observe({
+                shinyjs::toggleState("submit", !is.null(input$userInput) && 
+                  input$userInput != "")
+            })
             observeEvent(input$userInput, {
                 inFile <- input$userInput
                 if (is.null(inFile)) 
@@ -336,14 +382,28 @@ function ()
                 data <- sapply(fields, function(x) input[[x]])
                 data
             })
+            plotReady <- reactiveValues(ok = FALSE)
             observeEvent(input$submit, {
+                shinyjs::disable("submit")
+                shinyjs::show("text1")
+                plotReady$ok <- FALSE
                 saveData(formData())
+                Sys.sleep(1)
+                plotReady$ok <- TRUE
             })
             output$contents <- DT::renderDataTable(DT::datatable({
-                input$submit
-                anota <- read.table("hayai_annotation.csv", header = T, 
-                  sep = ",")
-                anota
+                if (plotReady$ok) {
+                  shinyjs::hide("text1")
+                  input$submit
+                  anota <- read.table("hayai_annotation.csv", 
+                    header = T, sep = ",")
+                  anota <- anota[, c("Query_ID", "Protein_name", 
+                    "Gene_name", "EC", "GO_BP_ID", "GO_BP_Term", 
+                    "GO_MF_ID", "GO_MF_Term", "GO_CC_ID", "GO_CC_Term", 
+                    "Protein_existence", "Sequence_identity", 
+                    "E_value")]
+                  anota
+                }
             }))
             output$downloadData <- downloadHandler(filename = function() {
                 paste("output_HayaiAnnotation", "zip", sep = ".")
