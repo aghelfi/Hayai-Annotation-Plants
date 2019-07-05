@@ -27,6 +27,14 @@ Bioinformatics, btz380, https://doi.org/10.1093/bioinformatics/btz380
 
 Updates
 -------
-2019/06/20. [Hayai-annotation Plants on Docker Container beta version](https://hub.docker.com/r/kazusa005/hayai-annotation-plants) Recommended for up to 2,000 sequences. <br/>
-2019/01/04. Low number of input sequences crash - Fixed. Now, graphics are generated if number of annotated queries are higher than 500.<br/>
-2019/01/04. Hayai-Annotation Plants run with even if USEARCH is installed in another directory (requires symbolic link).
+2019/07/05.<br/> 
+Update database on 2019/06.<br/>
+Taxonomy Viridiplantae were implemented, thus it includes algae. <br/>
+Database were clustered to 99% sequence identity and a new algorithm were implemented to make Hayai-annotation faster <br/>
+2019/06/20. <br/>
+[Hayai-annotation Plants on Docker Container beta version](https://hub.docker.com/r/kazusa005/hayai-annotation-plants)<br/>
+Recommended for up to 2,000 sequences. <br/>
+2019/01/04. <br/>
+Low number of input sequences crash - Fixed. Now, graphics are generated if number of annotated queries are higher than 500<br/>
+2019/01/04.<br/>
+Hayai-Annotation Plants run with even if USEARCH is installed in another directory (requires symbolic link).
