@@ -1,1 +1,6 @@
 exportPattern("^[[:alpha:]]+")
+import("shiny", "DT", "shinyjs")
+importFrom("grDevices", "dev.off", "pdf")
+importFrom("graphics", "axis", "barplot", "mtext", "par", "title")
+importFrom("utils", "read.csv", "read.table", "write.csv","write.table", "zip")
+
