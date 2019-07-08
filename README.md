@@ -27,7 +27,7 @@ Bioinformatics, btz380, https://doi.org/10.1093/bioinformatics/btz380
 
 Updates
 -------
-2019/07/05. Update database on 2019/06.<br/>
+2019/07/05. Update database on 2019/06/21.<br/>
 Taxonomy Viridiplantae were implemented, now it includes algae. <br/>
 Database were clustered to 99% sequence identity and a new algorithm were implemented to make Hayai-annotation faster <br/>
 
