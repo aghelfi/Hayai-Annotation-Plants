@@ -31,7 +31,7 @@ Updates
 Taxonomy Viridiplantae were implemented, now it includes algae. <br/>
 Database were clustered to 99% sequence identity and a new algorithm were implemented to make Hayai-annotation Plants faster <br/>
 
-2019/06/20. [Hayai-annotation Plants on Docker Container beta version](https://hub.docker.com/r/kazusa005/hayai-annotation-plants). Recommended for up to 2,000 sequences. <br/>
+2019/06/20. [Hayai-annotation Plants v1.0.1 on Docker Container](https://hub.docker.com/r/kazusa005/hayai-annotation-plants). Recommended for up to 2,000 sequences. <br/>
 
 2019/01/04. Low number of input sequences crash - Fixed. Now, graphics are generated if number of annotated queries are higher than 500. <br/>
 Hayai-Annotation Plants run with even if USEARCH is installed in another directory (requires symbolic link).
