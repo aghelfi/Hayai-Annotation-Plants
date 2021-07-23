@@ -25,8 +25,14 @@ Hayai-Annotation Plants: an ultra-fast and comprehensive functional gene annotat
 Andrea Ghelfi, Kenta Shirasawa, Hideki Hirakawa, Sachiko Isobe <br/>
 Bioinformatics, btz380, https://doi.org/10.1093/bioinformatics/btz380 
 
+Availability
+------------
+Hayai-Annotation is now available [on-line](http://pgdbjsnp.kazusa.or.jp/app/hayai2) 
+
 Updates
 -------
+2021/07/22. Update database and on-line version were developed.
+
 2019/07/05. Update database on 2019/06/21.<br/>
 Taxonomy Viridiplantae were implemented, now it includes algae. <br/>
 Database were clustered to 99% sequence identity and a new algorithm were implemented to make Hayai-annotation Plants faster <br/>
