@@ -19,11 +19,6 @@ Documentation
 -------------
 For downloading, installing and running **Hayai-Annotation Plants** please see [Hayai-Annotation-Plants wiki](https://github.com/kdri-genomics/Hayai-Annotation-Plants/wiki) 
 
-Reference
----------
-Hayai-Annotation Plants: an ultra-fast and comprehensive functional gene annotation system in plants <br/>
-Andrea Ghelfi, Kenta Shirasawa, Hideki Hirakawa, Sachiko Isobe <br/>
-Bioinformatics, btz380, https://doi.org/10.1093/bioinformatics/btz380 
 
 Availability
 ------------
