@@ -1,0 +1,18 @@
+2023-08-29 21:44:53,292 [INFO ] Ontology: biological_process, roots 1, leaves 13624
+2023-08-29 21:44:53,585 [INFO ] Ontology: molecular_function, roots 1, leaves 9063
+2023-08-29 21:44:53,625 [INFO ] Ontology: cellular_component, roots 1, leaves 2761
+2023-08-29 21:45:04,775 [INFO ] Ground truth: biological_process, proteins 22424
+2023-08-29 21:45:06,640 [INFO ] Ground truth: molecular_function, proteins 19004
+2023-08-29 21:45:07,302 [INFO ] Ground truth: cellular_component, proteins 19697
+2023-08-29 21:45:44,112 [INFO ] Prediction: prediction_dir/pred_blast2go.tsv, biological_process, proteins 13568
+2023-08-29 21:45:49,650 [INFO ] Prediction: prediction_dir/pred_blast2go.tsv, molecular_function, proteins 14448
+2023-08-29 21:45:52,631 [INFO ] Prediction: prediction_dir/pred_blast2go.tsv, cellular_component, proteins 12954
+2023-08-29 22:59:50,126 [INFO ] Prediction: prediction_dir/pred_blast2go.tsv, evaluated
+2023-08-29 23:00:29,190 [INFO ] Prediction: prediction_dir/pred_hayai.tsv, biological_process, proteins 14910
+2023-08-29 23:00:34,874 [INFO ] Prediction: prediction_dir/pred_hayai.tsv, molecular_function, proteins 16167
+2023-08-29 23:00:37,912 [INFO ] Prediction: prediction_dir/pred_hayai.tsv, cellular_component, proteins 17909
+2023-08-30 02:09:12,481 [INFO ] Prediction: prediction_dir/pred_hayai.tsv, evaluated
+2023-08-30 02:25:59,509 [INFO ] Prediction: prediction_dir/pred_trapid.tsv, biological_process, proteins 13762
+2023-08-30 02:26:04,899 [INFO ] Prediction: prediction_dir/pred_trapid.tsv, molecular_function, proteins 14603
+2023-08-30 02:26:07,771 [INFO ] Prediction: prediction_dir/pred_trapid.tsv, cellular_component, proteins 13798
+2023-08-30 07:20:11,489 [INFO ] Prediction: prediction_dir/pred_trapid.tsv, evaluated

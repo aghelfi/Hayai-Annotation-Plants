@@ -1,0 +1,11 @@
+library(SemDist)
+library(org.At.tair.db)
+
+bp <- computeIA("BP",  "arabidopsis")
+bp <- as.data.frame(unlist(bp))
+mf <- computeIA("MF",  "arabidopsis")
+mf <- as.data.frame(unlist(mf))
+cc <- computeIA("CC",  "arabidopsis")
+cc <- as.data.frame(unlist(cc))
+ia <- rbind(bp, mf, cc)
+write.table(ia, "dataset/IA.tsv", row.names = TRUE, col.names = FALSE, sep = "\t", quote = FALSE)
