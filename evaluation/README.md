@@ -1,6 +1,6 @@
-# Benchmarking Hayai-Annotation Plants: A Re-evaluation Using Standard Evaluation Metrics 
+## Benchmarking Hayai-Annotation Plants: A Re-evaluation Using Standard Evaluation Metrics 
 
-### Prepare gold standard dataset using goa_arabidopsis.gaf
+Prepare gold standard dataset using goa_arabidopsis.gaf
 
 #### Extract gene ids list from Araport11 
 egrep ">" dataset/Araport11_genes.201606.pep.repr.fasta | awk '{sub(">",""); print $1}' | awk -F"." '{print $1}' > dataset/araport11_list.txt
